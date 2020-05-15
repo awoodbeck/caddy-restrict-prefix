@@ -11,7 +11,7 @@ import (
 )
 
 func init() {
-	_ = caddy.RegisterModule(RestrictPrefix{})
+	caddy.RegisterModule(RestrictPrefix{})
 }
 
 // RestrictPrefix is middleware that restricts requests where any portion
