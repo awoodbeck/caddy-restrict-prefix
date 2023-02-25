@@ -11,7 +11,7 @@ import (
 )
 
 func init() {
-	caddy.RegisterModule(RestrictPrefix{})
+	caddy.RegisterModule(&RestrictPrefix{})
 }
 
 // RestrictPrefix is middleware that restricts requests where any portion
@@ -23,7 +23,7 @@ type RestrictPrefix struct {
 }
 
 // CaddyModule returns the Caddy module information.
-func (RestrictPrefix) CaddyModule() caddy.ModuleInfo {
+func (*RestrictPrefix) CaddyModule() caddy.ModuleInfo {
 	return caddy.ModuleInfo{
 		ID:  "http.handlers.restrict_prefix",
 		New: func() caddy.Module { return new(RestrictPrefix) },
@@ -48,9 +48,9 @@ func (p *RestrictPrefix) Validate() error {
 }
 
 // ServeHTTP implements the caddyhttp.MiddlewareHandler interface.
-func (p RestrictPrefix) ServeHTTP(w http.ResponseWriter, r *http.Request,
-	next caddyhttp.Handler) error {
-
+func (p *RestrictPrefix) ServeHTTP(w http.ResponseWriter, r *http.Request,
+	next caddyhttp.Handler,
+) error {
 	for _, part := range strings.Split(r.URL.Path, "/") {
 		if strings.HasPrefix(part, p.Prefix) {
 			http.Error(w, "Not Found", http.StatusNotFound)
