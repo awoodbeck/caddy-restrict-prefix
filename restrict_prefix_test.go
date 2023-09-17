@@ -26,7 +26,7 @@ func TestRestrictPrefix(t *testing.T) {
 	}
 
 	for i, c := range testCases {
-		r := httptest.NewRequest(http.MethodGet, c.path, nil)
+		r := httptest.NewRequest(http.MethodGet, c.path, http.NoBody)
 		w := httptest.NewRecorder()
 		err = rp.ServeHTTP(w, r, next)
 		if err != nil {
@@ -43,7 +43,7 @@ func TestRestrictPrefix(t *testing.T) {
 
 type nextHandler struct{}
 
-func (n nextHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) error {
+func (n nextHandler) ServeHTTP(w http.ResponseWriter, _ *http.Request) error {
 	w.WriteHeader(http.StatusOK)
 	return nil
 }
