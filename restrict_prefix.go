@@ -20,9 +20,9 @@ func init() {
 // RestrictPrefix is middleware that restricts requests where any portion
 // of the URI matches a given prefix.
 type RestrictPrefix struct {
-	Prefix string `json:"prefix,omitempty"`
-
 	logger *zap.Logger
+
+	Prefix string `json:"prefix,omitempty"`
 }
 
 // CaddyModule returns the Caddy module information.
